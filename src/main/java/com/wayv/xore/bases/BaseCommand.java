@@ -1,15 +1,37 @@
 package com.wayv.xore.bases;
 
-import com.wayv.xore.interfaces.CommandCtx;
+import com.wayv.xore.Resolver;
+import com.wayv.xore.exception.CommandException;
+import com.wayv.xore.interfaces.CommandContext;
+import com.wayv.xore.interfaces.CommandDefinitions;
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.channel.MessageChannel;
+import discord4j.core.spec.MessageCreateSpec;
+import reactor.core.publisher.Mono;
 
-public class BaseCommand {
+import java.util.function.Consumer;
 
-    public String name;
-    public String description;
-    public boolean enabled;
-    public String[] limitTo;
+public class BaseCommand implements CommandDefinitions {
 
-    public void define() {}
+    public String name() {
+        return "None";
+    }
 
-    public void executeCommand(CommandCtx ctx) {}
+    public String description() {
+        return "No description";
+    }
+
+    public CommandException getExceptions() {
+        return new CommandException();
+    }
+
+    public Resolver getResolvers() {
+        return new Resolver();
+    }
+
+    public Mono<Message> sendWsMessage(MessageChannel channel, Consumer<? super MessageCreateSpec> content) {
+        return channel.createMessage(content);
+    }
+
+    public void executeCommand(CommandContext ctx) {}
 }

@@ -1,31 +1,18 @@
 package com.wayv.xore;
 
-import java.io.IOException;
-import java.lang.module.ModuleDescriptor;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
+import com.wayv.xore.interfaces.CommandDefinitions;
+import com.wayv.xore.modules.core.PingCommand;
+import com.wayv.xore.modules.core.StatsCommand;
+import com.wayv.xore.modules.information.WhoisCommand;
 
 public class CommandManager {
 
-    public static void load() throws IOException {
-        Path current = Paths.get(System.getProperty("user.dir"));
 
-        Path dir = Paths.get(current.toString(),
-                "src",
-                "main",
-                "java",
-                "com",
-                "wayv",
-                "xore",
-                "command"
-        );
-
-        try (Stream<Path> paths = Files.walk(Path.of(dir.toString()))) {
-            paths.filter(Files::isRegularFile)
-                 .forEach((file) -> {
-                 });
-        }
+    public static CommandDefinitions[] all() {
+        return new CommandDefinitions[]{
+                new PingCommand(),
+                new StatsCommand(),
+                new WhoisCommand()
+        };
     }
 }
